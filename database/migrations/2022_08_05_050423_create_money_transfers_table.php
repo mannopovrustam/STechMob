@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('money_transfers', function (Blueprint $table) {
             $table->id();
+            $table->integer('money_invoice_id');
+            $table->foreignId('currency_id')->constrained()
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->double('money_sys')->default(0);
+            $table->double('money_get')->default(0);
+            $table->boolean('main')->default(false);
+            $table->tinyInteger('status')->default(\App\Models\MoneyTransfer::STATUS['waiting']);
             $table->timestamps();
-            $table->integer('money_invoice_id')->nullable();
-            $table->integer('currency_id')->nullable();
-            $table->double('money_sys')->nullable();
-            $table->double('money_get')->nullable();
-            $table->integer('main')->nullable();
-            $table->integer('status')->nullable();
-
         });
     }
 
