@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('product_codes', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id')->nullable();
-            $table->char('code')->nullable();
+            $table->foreignId('product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('code');
             $table->integer('order_id')->nullable();
             $table->integer('shipment_id')->nullable();
-            $table->integer('status')->nullable();
+            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting']);
             $table->timestamps();
         });
     }

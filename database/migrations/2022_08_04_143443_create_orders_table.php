@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id')->nullable();
+            $table->foreignId('invoice_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('warehouse_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('currency_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('trade_type')->nullable();
+            $table->integer('trade_type')->default(\App\Models\Order::TRADE_TYPE['cash']);
             $table->timestamps();
         });
     }

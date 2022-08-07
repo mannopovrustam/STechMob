@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('pre_requests', function (Blueprint $table) {
             $table->id();
-            $table->integer('mark_id')->nullable();
-            $table->char('warehouse_form_id')->nullable();
-            $table->integer('warehouse_to_id')->nullable();
-            $table->integer('count')->nullable();
-            $table->dateTime('date')->nullable();
+            $table->integer('mark_id');
+            $table->integer('warehouse_form_id');
+            $table->integer('warehouse_to_id');
+            $table->integer('count')->default(0);
+            $table->dateTime('date')->useCurrent();
             $table->timestamps();
         });
     }

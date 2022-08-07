@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
-            $table->char('day')->nullable();
-            $table->boolean('day_off')->nullable();
+            $table->string('day');
+            $table->boolean('day_off')->default(false);
             $table->timestamps();
         });
     }

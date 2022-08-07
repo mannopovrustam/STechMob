@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('product_transfers', function (Blueprint $table) {
             $table->id();
             $table->integer('invoice_id')->nullable();
-            $table->integer('product_id')->nullable();
-            $table->char('quantity')->nullable();
-            $table->char('status')->nullable();
+            $table->integer('product_id');
+            $table->string('quantity')->default(0);
+            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting']);
             $table->timestamps();
         });
     }

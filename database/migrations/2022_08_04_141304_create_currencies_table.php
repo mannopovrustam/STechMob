@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->char('name')->nullable();
-            $table->char('code')->nullable();
-            $table->boolean('rate')->nullable();
-            $table->char('icon')->nullable();
+            $table->string('symbol')->nullable();
+            $table->string('title', 255);
+            $table->decimal('rate', 9,2)->default(1);
+            $table->enum('position', ['before', 'after'])->default('after');
+            $table->boolean('default')->default(0);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

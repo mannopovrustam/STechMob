@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('transferables', function (Blueprint $table) {
             $table->id();
-            $table->char('type')->nullable();
-            $table->char('date')->nullable();
-            $table->char('note')->nullable();
-            $table->char('warehouse_id')->nullable();
-            $table->char('transferable_type')->nullable();
-            $table->integer('transferable_id')->nullable();
+            $table->string('type')->nullable();
+            $table->string('date')->useCurrent();
+            $table->string('note')->nullable();
+            $table->string('warehouse_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('status')->nullable();
+            $table->string('transferable_type');
+            $table->integer('transferable_id');
+            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting']);
             $table->timestamps();
         });
     }

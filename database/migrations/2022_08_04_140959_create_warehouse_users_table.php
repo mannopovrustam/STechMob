@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('warehouse_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
-            $table->integer('warehouse_id')->nullable();
-            $table->boolean('main')->nullable();
+            $table->integer('user_id');
+            $table->integer('warehouse_id');
+            $table->boolean('main')->default(false);
             $table->timestamps();
         });
     }

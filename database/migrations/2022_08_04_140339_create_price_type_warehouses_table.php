@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('price_type_warehouses', function (Blueprint $table) {
             $table->id();
-            $table->integer('pricetype_id')->nullable();
+            $table->foreignId('pricetype_id')->constrained('price_types');
             $table->integer('warehouse_id')->nullable();
-            $table->integer('currency_id')->nullable();
+            $table->integer('currency_id')->default(1);
             $table->integer('mark_id')->nullable();
-            $table->double('bonus')->nullable();
-            $table->double('price')->nullable();
+            $table->decimal('bonus')->nullable();
+            $table->decimal('price')->nullable();
             $table->timestamps();
         });
     }

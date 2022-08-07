@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->double('rent');
-            $table->char('photo')->nullable();
-            $table->double('profit')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->double('salary')->nullable();
-            $table->date('salary_date')->nullable();
-            $table->boolean('bonus')->nullable();
+            $table->double('rent')->default(0);
+            $table->string('photo')->nullable();
+            $table->double('profit')->default(0);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->decimal('salary')->default(0);
+            $table->date('salary_date')->useCurrent();
+            $table->boolean('bonus')->default(false);
             $table->timestamps();
         });
     }

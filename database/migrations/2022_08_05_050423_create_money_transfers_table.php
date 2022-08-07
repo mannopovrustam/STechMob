@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('money_sys')->default(0);
             $table->double('money_get')->default(0);
             $table->boolean('main')->default(false);
-            $table->tinyInteger('status')->default(\App\Models\MoneyTransfer::STATUS['waiting']);
+            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting']);
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->char('name')->nullable();
-            $table->dateTime('date')->nullable();
+            $table->string('name');
+            $table->dateTime('date')->useCurrent();
             $table->timestamps();
         });
     }

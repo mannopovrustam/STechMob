@@ -8,10 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class MoneyTransfer extends Model
 {
     use HasFactory;
-
-    const STATUS = [
-        'waiting' => 0,
-        'success' => 1,
-        'ignore' => 2,
-    ];
 }

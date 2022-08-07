@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->integer('brand_id')->nullable();
             $table->integer('type_id')->nullable();
-            $table->char('name')->nullable();
-            $table->char('version')->nullable();
-            $table->char('barcode')->nullable();
+            $table->string('name');
+            $table->string('version')->nullable();
+            $table->string('barcode')->nullable();
             $table->timestamps();
         });
     }

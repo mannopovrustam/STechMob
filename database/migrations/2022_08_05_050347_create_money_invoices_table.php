@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('money_invoices', function (Blueprint $table) {
             $table->id();
-            $table->char('name')->nullable();
+            $table->string('name');
             $table->integer('currency_id')->nullable();
-            $table->double('money_sys')->nullable();
-            $table->double('money_get')->nullable();
+            $table->decimal('money_sys')->default(0);
+            $table->decimal('money_get')->default(0);
             $table->timestamps();
         });
     }
