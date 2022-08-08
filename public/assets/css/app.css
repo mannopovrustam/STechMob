@@ -524,9 +524,10 @@ body[data-layout=horizontal] .footer {
     font-size: 1.05rem;
     line-height: 1.40625rem;
     vertical-align: middle;
-    color: #7b8190;
+    color: #8173d2;
     -webkit-transition: all .4s;
-    transition: all .4s
+    transition: all .4s;
+    text-align: center;
 }
 
 #sidebar-menu ul li a:hover {

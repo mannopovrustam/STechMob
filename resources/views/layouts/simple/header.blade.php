@@ -1,28 +1,92 @@
 <header id="page-topbar">
-    <div class="navbar-header">
-        <div class="header-src">
-            <!-- LOGO -->
-            <div class="navbar-brand-box">
-                <a href="/" class="logo logo-dark">
-                    {{--<x-jet-application-mark class="block h-9 w-auto" />--}}
-                </a>
-
-                <a href="/" class="logo logo-light">
-                    {{--<x-jet-application-mark class="block h-9 w-auto" />--}}
-                </a>
-            </div>
-
-            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
-                <i class="fa fa-fw fa-bars"></i>
-            </button>
-        </div>
+    <div class="navbar-header justify-content-between">
 
         <div class="d-flex align-items-center">
+
+            <div class="text-info cursor-pointer" style="margin-left: 15px;">
+                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
+                    <span>Balans</span>
+                    <p style="margin-bottom: 0;">156656.55</p>
+                </div>
+            </div>
+            <div class="text-primary cursor-pointer" style="margin-left: 15px;">
+                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
+                    <span>Foyda</span>
+                    <p style="margin-bottom: 0;">156656.55</p>
+                </div>
+            </div>
+            <div class="text-default cursor-pointer" style="margin-left: 15px;" data-bs-toggle="modal" data-bs-target="#currencies">
+                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
+                    <span>USD</span>
+                    <p style="margin-bottom: 0;">1</p>
+                </div>
+                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
+                    <span>UZS</span>
+                    <p style="margin-bottom: 0;">11050</p>
+                </div>
+                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
+                    <span>EUR</span>
+                    <p style="margin-bottom: 0;">0.89</p>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="dropdown d-none d-lg-inline-block ms-1">
+                <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="assets/images/trade/buy.png" style="width: 2rem;" alt="">
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="">
+                    <div class="px-lg-2">
+                        <div class="row g-0">
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="assets/images/trade/money.png" alt="Github">
+                                    <span>Naqd savdo</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="assets/images/trade/loan.png" alt="bitbucket">
+                                    <span>Nasiya</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="assets/images/trade/pay-day.png" alt="dribbble">
+                                    <span>Muddatli to’lov</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row g-0">
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="/assets/images/trade/add.png" alt="dropbox">
+                                    <span>Kirim</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="assets/images/trade/goods.png" alt="mail_chimp">
+                                    <span>O`tkazma</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="index.html#">
+                                    <img src="assets/images/trade/return.png" alt="slack">
+                                    <span>Maxsulot qaytish</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="dropdown d-none d-lg-inline-block ms-1" style="margin-right: 5px;">
                 <span>Sana</span>
                 <p style="margin-bottom: 0;">{{ \Carbon\Carbon::now()->format('d.m.Y') }}
                 </p>
             </div>
+
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
                     <i class="uil-minus-path"></i>
