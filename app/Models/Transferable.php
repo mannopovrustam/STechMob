@@ -14,5 +14,4 @@ class Transferable extends Model
         'success' => 1,
         'ignore' => 2,
     ];
-
 }

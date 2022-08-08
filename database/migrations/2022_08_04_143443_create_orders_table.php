@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('client_id')->nullable();
             $table->integer('currency_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('trade_type')->default(\App\Models\Order::TRADE_TYPE['cash']);
+            $table->integer('trade_type');
             $table->timestamps();
         });
     }
