@@ -30,28 +30,33 @@
                 </div>
             </div>
         </div>
+        @isset($header)
+            <div>
+                <h4>{{ $header }}</h4>
+            </div>
+        @endisset
         <div class="d-flex align-items-center">
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="assets/images/trade/buy.png" style="width: 2rem;" alt="">
+                    <img src="/assets/images/trade/buy.png" style="width: 2rem;" alt="">
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="">
                     <div class="px-lg-2">
                         <div class="row g-0">
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/trade?type=cash">
                                     <img src="assets/images/trade/money.png" alt="Github">
                                     <span>Naqd savdo</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/trade?type=loan">
                                     <img src="assets/images/trade/loan.png" alt="bitbucket">
                                     <span>Nasiya</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/trade?type=installment">
                                     <img src="assets/images/trade/pay-day.png" alt="dribbble">
                                     <span>Muddatli to’lov</span>
                                 </a>
@@ -60,19 +65,19 @@
 
                         <div class="row g-0">
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/income">
                                     <img src="/assets/images/trade/add.png" alt="dropbox">
                                     <span>Kirim</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/transfer">
                                     <img src="assets/images/trade/goods.png" alt="mail_chimp">
                                     <span>O`tkazma</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="index.html#">
+                                <a class="dropdown-icon-item" href="/return">
                                     <img src="assets/images/trade/return.png" alt="slack">
                                     <span>Maxsulot qaytish</span>
                                 </a>

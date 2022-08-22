@@ -9,6 +9,8 @@ class Transferable extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     const STATUS = [
         'waiting' => 0,
         'success' => 1,

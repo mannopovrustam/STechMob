@@ -1,21 +1,17 @@
 <div class="vertical-menu">
     <div class="navbar-brand-box">
-        <a href="/" class="logo logo-dark">
-            <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="" height="22"></span>
-            <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="" height="20"></span>
-        </a>
-        <a href="/" class="logo logo-light">
-            <span class="logo-sm"><img src="assets/images/logo-sm.png" alt="" height="22"></span>
-            <span class="logo-lg"><img src="assets/images/logo-light.png" alt="" height="20"></span>
-        </a>
+        {{--<h5 class="logo logo-dark text-primary">--}}
+            {{--Sklad: Yo'l--}}
+        {{--</h5>--}}
+        {{--<h5 class="logo logo-light text-primary">--}}
+            {{--Sklad: Yo'l--}}
+        {{--</h5>--}}
     </div>
     <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
         <i class="fa fa-fw fa-bars"></i>
     </button>
 
     <div data-simplebar class="sidebar-menu-scroll">
-
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
@@ -35,7 +31,7 @@
                         <li><a href="projects">Mahsulot tarixi model bo’yicha</a></li>
                         <li><a href="projects">Mahsulot Kirim bo’yicha hisobot</a></li>
                         <li><a href="projects">Mahsulot Qidirish</a></li>
-                        <li><a href="projects" style="color: #FD5308">Mahsulot Qo'shish</a></li>
+                        <li><a href="/marks" style="color: #FD5308">Mahsulot Qo'shish</a></li>
                     </ul>
                 </li>
                 <li>
@@ -57,7 +53,7 @@
                         <span>Mijozlar</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="projects">Barcha mijozlar</a></li>
+                        <li><a href="/clients">Barcha mijozlar</a></li>
                         <li><a href="projects">Xaqdor mijozlar</a></li>
                         <li><a href="projects">Qarzdor mijozlar</a></li>
                         <li><a href="projects" style="color: #FD5308">Muddatli to’lov</a></li>

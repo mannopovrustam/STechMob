@@ -514,7 +514,7 @@ body[data-layout=horizontal] .footer {
     -webkit-transition: all .4s;
     transition: all .4s;
     margin: 0 10px;
-    border-radius: 3px
+    border-radius: 3px;
 }
 
 #sidebar-menu ul li a i {
@@ -524,7 +524,7 @@ body[data-layout=horizontal] .footer {
     font-size: 1.05rem;
     line-height: 1.40625rem;
     vertical-align: middle;
-    color: #8173d2;
+    color: #7b8190;
     -webkit-transition: all .4s;
     transition: all .4s;
     text-align: center;
@@ -630,7 +630,7 @@ body[data-layout=horizontal] .footer {
 
 @media (min-width: 769px) {
     .vertical-collpsed {
-        min-height: 1450px
+        /*min-height: 1450px*/
     }
 }
 

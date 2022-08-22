@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4">
-                <script>document.write(new Date().getFullYear())</script> © BizningUylar
+                <script>document.write(new Date().getFullYear())</script> © STechMob
             </div>
             <div class="col-sm-4">
 {{--                <p class="footer__update">Последная обнавление: {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->updated_at)->format('d.m.Y') }}</p>--}}

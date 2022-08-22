@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('version')->nullable();
             $table->string('barcode')->nullable();
+            $table->integer('unit_id')->nullable();
             $table->timestamps();
         });
     }

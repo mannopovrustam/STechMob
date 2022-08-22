@@ -54,3 +54,11 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+Route::get('artisan/{command}', function ($command) {
+    $text = '';
+    foreach (explode('|', $command) as $item) {
+        $text .= ' '.$item;
+    }
+    \Artisan::call($text);
+});

@@ -1,0 +1,108 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: acer
+ * Date: 20.08.2022
+ * Time: 22:59
+ */
+
+namespace App\Traits;
+
+
+use App\Http\Livewire\CartProductIncome;
+use App\Models\Expense;
+use Dflydev\DotAccessData\Data;
+
+trait CalculateExpense
+{
+    public function expenseCases($type, $mark, $price)
+    {
+        switch ($type){
+            case Expense::TYPE['total']: return $this->total($mark, $price);
+                break;
+            case Expense::TYPE['piece']: return $this->piece($mark, $price);
+                break;
+            case Expense::TYPE['total%']: return $this->percentage($mark, $price);
+                break;
+            case Expense::TYPE['distribution']: return $this->distribution($mark, $price);
+                break;
+            default : return 0;
+        }
+    }
+
+    public function calculateExpense()
+    {
+        $markExpenses = []; $result = [];
+        foreach ($this->expense as $key => $value){
+            $markExpenses[] = $this->expenseCases($value['type'], $value['mark'], $value['price']);
+        }
+        foreach ($markExpenses as $markExpense) {
+            foreach ($markExpense as $key => $item){
+                if (!isset($result[$key])){
+                    $result[$key] = $item;
+                }else{
+                    $result[$key] += $item;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public function total($marks, $price)
+    {
+        $this->mark = session()->get('markList');
+
+        $quantity = [];
+        foreach ($marks as $mark){
+            if (!array_key_exists($mark, $quantity)){ $quantity[$mark] = 0; }
+            $quantity[$mark] += (int)$this->mark[$mark]['quantity'];
+        }
+        $expense = $price/collect($quantity)->sum();
+        foreach ($marks as $mark){
+            $quantity[$mark] = $expense*(int)$this->mark[$mark]['quantity'];
+        }
+
+        return $quantity;
+    }
+
+    public function piece($marks, $price)
+    {
+        $this->mark = session()->get('markList');
+        $quantity = [];
+        foreach ($marks as $mark){
+            $quantity[$mark] = $price*(int)$this->mark[$mark]['quantity'];
+        }
+        return $quantity;
+
+    }
+
+    public function percentage($marks, $price)
+    {
+        $this->mark = session()->get('markList');
+        $quantity = [];
+        foreach ($marks as $mark){
+            if (!array_key_exists($mark, $quantity)){ $quantity[$mark] = 0; }
+            $quantity[$mark] += (int)$this->mark[$mark]['quantity']*(int)$this->mark[$mark]['price']*($price/100);
+        }
+        return $quantity;
+    }
+
+    public function distribution($marks, $price)
+    {
+        $this->mark = session()->get('markList');
+
+        $sumPrice = collect($marks)->map(function ($value){
+            return ((double)$this->mark[(int)$value]['price']*(double)$this->mark[(int)$value]['quantity']);
+        })->sum();
+
+        $quantity = [];
+        foreach ($marks as $mark){
+            if (!array_key_exists($mark, $quantity)){ $quantity[$mark] = 0; }
+
+            $percentage = ($this->mark[$mark]['price']*$this->mark[$mark]['quantity'])/$sumPrice;
+            $quantity[$mark] += ($percentage*$price);
+        }
+        return $quantity;
+    }
+}

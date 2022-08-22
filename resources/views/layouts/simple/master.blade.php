@@ -12,7 +12,7 @@
     @livewireStyles
     @stack('styles')
 </head>
-<body>
+<body data-keep-enlarged="true" class="vertical-collpsed">
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -22,6 +22,7 @@
 </div>
 
 <div id="layout-wrapper">
+    {{--<x-header></x-header>--}}
     @include('layouts.simple.header')
     @include('layouts.simple.sidebar')
     <div class="main-content">
@@ -37,6 +38,7 @@
 
                 <div class="row">
                     <div class="col-12">
+                        {{ $slot }}
                         @yield('content')
                     </div>
                 </div>
