@@ -10,4 +10,13 @@ class PriceTypeWarehouse extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function priceType()
+    {
+        return $this->belongsTo(PriceType::class);
+    }
+    public function mark()
+    {
+        return $this->belongsTo(Mark::class);
+    }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('warehouse_id');
-            $table->boolean('main')->default(false);
+            $table->boolean('default')->default(false);
             $table->timestamps();
         });
     }

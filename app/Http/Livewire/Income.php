@@ -4,16 +4,19 @@ namespace App\Http\Livewire;
 
 use App\Contracts\Repositories\ClientRepositoryInterface;
 use App\Contracts\Services\ClientServiceInterface;
+use App\Helpers\ResponseError;
 use App\Models\Mark;
 use App\Services\CalculateExpenseService\CalculateExpenseService;
 use App\Services\ClientService\ClientService;
+use App\Traits\Payment;
 use Livewire\Component;
 
 class Income extends Component
 {
     public $marks = [], $mark;
-    public $expense = [], $expenseMarks = [], $expenseInputs = [], $expenseInputsLoop = 1;
-    public $addClient = 'false', $addExpense = 'false', $addPay = 'false', $collections = [];
+    public $expense = [], $expenseMarks = [], $expenseInputs = [], $expenseInputsLoop = 1, $expenseResult = [], $expenseResultSum = 0;
+    public $addClient = 'false', $addExpense = 'false', $addPay = 'false', $collections = [], $pay = 0, $incomeSum = 0;
+    public $addCode = 'false', $addCodeMark, $markCode = [], $code, $discount = 0;
     protected $data;
     protected $clientService, $calculateExpenseService;
 
@@ -31,6 +34,18 @@ class Income extends Component
         $this->clientService = $clientService;
         $this->data = $clientRepository->paginate(15);
         $this->marks = Mark::whereIn('id', session()->get('mark') ?? [])->get();
+        $this->expenseResultSum = collect($this->expenseResult)->sum();
+
+        if ($this->marks){
+            $this->incomeSum = collect($this->mark)->map(function ($value, $key){
+                return ((isset($value['quantity']) ? (int)$value['quantity'] : 0)*(isset($value['price']) ? (int)$value['price'] : 0));
+            })->sum();
+        }
+
+        $this->pay = (isset($this->incomeSum) ? $this->incomeSum : 0) + $this->expenseResultSum;
+
+        $this->sumPay($this->pay);
+
         return view('livewire.income');
     }
 
@@ -49,6 +64,41 @@ class Income extends Component
         $this->addClient = 'false';
     }
 
+    public function addCode($id)
+    {
+        $this->addCodeMark = $id;
+        $this->addCode = 'true';
+    }
+
+    public function storeCode($id)
+    {
+        $mark = Mark::find($id);
+        if(!$mark) {
+            return ResponseError::ERROR_404;
+        }
+        $code = session()->get('markCode');
+
+        if (!in_array($this->code, $code[$id])){
+            $code[$id][] = $this->code;
+        }
+
+        session()->put('markCode', $code);
+
+        $this->code = null;
+    }
+
+    public function removeCode($key, $id)
+    {
+        $code = session()->get('markCode');
+
+        if ($code) {
+            unset($code[$key][$id]);
+        }
+
+        session()->put('markCode', $code);
+    }
+
+
     public function expenseMark($key)
     {
         return $expenseMarks[$key] = 'false';
@@ -60,7 +110,7 @@ class Income extends Component
     }
 
     public function calculateExpense(){
-        return $this->calculateExpenseService->calculateExpense($this->expense, $this->mark);
+        $this->expenseResult = $this->calculateExpenseService->calculateExpense($this->expense, $this->mark);
     }
 
     public function addExpense($expenseInputsLoop)
@@ -74,4 +124,6 @@ class Income extends Component
         unset($this->expenseInputs[$expenseInputsLoop]);
         unset($this->expense[$expenseInputsLoop]);
     }
+
+    use Payment;
 }

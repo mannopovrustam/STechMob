@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 
 class TradeController extends Controller
 {
-    public function index()
+    public function show($trade)
     {
-        session()->put('warehouse_id', 2);
-        $type = Order::TRADE_TYPE_NAME[\request()->get('type')];
-        return view('admin.trade.trade', compact('type'));
+        $type = Order::TRADE_TYPE_NAME[$trade];
+        return view('admin.trade.trade', compact('type'), compact('trade'));
     }
 }

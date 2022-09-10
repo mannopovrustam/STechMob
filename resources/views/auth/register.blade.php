@@ -8,6 +8,14 @@
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        @if(!\App\Models\User::exists())
+            <div class="mb-4 text-center">
+                <p>
+                    Ro'yhatdan o'tsangiz siz Sistemaning <b>"SuperAdmin"</b>iga aylanasiz hamda va siz uchun <b>"Asosiy Ombor"</b> yaratiladi.
+                    <b>"Asosiy Ombor"</b> keyinchalik ochilgan omborlarning bosh ombori bo'ladi.
+                </p>
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -44,6 +52,8 @@
                                 type="password"
                                 name="password_confirmation" required />
             </div>
+
+            <!-- First registered -->
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">

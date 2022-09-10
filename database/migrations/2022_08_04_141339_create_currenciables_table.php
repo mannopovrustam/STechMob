@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('currenciables', function (Blueprint $table) {
             $table->id();
             $table->integer('currency_id');
-            $table->string('currenciable_type');
-            $table->integer('currenciable_id');
-            $table->boolean('main')->default(false);
+            $table->morphs('currenciable');
+            $table->boolean('default')->default(false);
             $table->timestamps();
         });
     }

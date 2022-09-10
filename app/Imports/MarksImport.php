@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\Brand;
 use App\Models\Mark;
 use App\Models\Type;
-use App\Services\ClientService\ClientService;
+use App\Services\MarkService\MarkService;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -24,7 +24,7 @@ class MarksImport implements ToModel, WithHeadingRow
         $brand = Brand::firstOrCreate(['name' => $row['brend']]);
 
         $collection = [$type['id'], $brand['id'], $row['maxsulot'], $row['versiya']];
-        (new ClientService())->createOrUpdate($this->setMarkParams($collection));
+        (new MarkService())->createOrUpdate($this->setMarkParams($collection));
 
     }
 

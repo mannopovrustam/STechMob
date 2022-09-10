@@ -9,4 +9,13 @@ class Currenciable extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function currencies()
+    {
+        return $this->morphedByMany(Currency::class, 'currenciable');
+    }
+    public function employees()
+    {
+        return $this->morphedByMany(Employee::class, 'currenciable');
+    }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('code');
             $table->integer('order_id')->nullable();
             $table->integer('shipment_id')->nullable();
-            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting']);
+            $table->tinyInteger('status')->default(\App\Models\Transferable::STATUS['waiting'])->nullable();
             $table->timestamps();
         });
     }

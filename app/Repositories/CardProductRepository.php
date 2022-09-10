@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Models\Mark;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Warehouse;
 use Nette\Utils\Arrays;
 
@@ -18,10 +19,11 @@ class CardProductRepository
 {
     public function searchTrade($searchTerm)
     {
+
         $data = [];
         if ($searchTerm && Mark::where('name', 'like', "%{$searchTerm}%")->skip(0)->take(5)->pluck('id')->count() > 0) {
             foreach (Mark::where('name', 'like', "%{$searchTerm}%")->with(['type', 'brand',
-                'products' => function($q){ return $q->where('warehouse_id', Warehouse::getId()); },
+                'products' => function($q){ return $q->where('warehouse_id', User::getWarehouse()->first()->id); },
                 'products.shipment' => function($q){ return $q->select('invoice_id'); },
                 'products.shipment.invoice' => function($q){ return $q->select('name'); },
             ])->skip(0)->take(5)->get() as $key => $item) {

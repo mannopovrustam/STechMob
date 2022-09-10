@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->integer('group_id')->nullable();
+            $table->boolean('default')->nullable();
+            $table->integer('price_type_id')->nullable();
             $table->timestamps();
         });
     }

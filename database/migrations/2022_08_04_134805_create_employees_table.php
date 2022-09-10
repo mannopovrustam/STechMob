@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('profit')->default(0);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->decimal('salary')->default(0);
-            $table->date('salary_date')->useCurrent();
+            $table->tinyInteger('salary_date')->default(25);
             $table->boolean('bonus')->default(false);
             $table->timestamps();
         });

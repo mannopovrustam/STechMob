@@ -6,6 +6,7 @@ use App\Helpers\ResponseError;
 use App\Models\Mark;
 use App\Models\Product;
 use App\Models\ProductCode;
+use App\Models\User;
 use App\Models\Warehouse;
 use App\Repositories\CardProductRepository;
 use Livewire\Component;
@@ -22,7 +23,6 @@ class SearchProduct extends Component
 
     public function render()
     {
-//        session()->forget('mark');
         $this->productSearch();
         return view('livewire.search-product');
     }
@@ -35,6 +35,7 @@ class SearchProduct extends Component
         if (ProductCode::where('code', $this->searchTerm)->first()) { $this->addCode($this->searchTerm); }
 
         $this->searchTermData = $cardProduct->$type($this->searchTerm);
+
     }
 
     public function addMark($id)
@@ -68,21 +69,20 @@ class SearchProduct extends Component
 
     public function addCode($code)
     {
-        $product = ProductCode::find($code)->product->where('warehouse_id', Warehouse::getId());
-        if(!$product) {abort(404);}
-        $cart = session()->get('product_codes');
-        if(!$cart) { $cart = [ $product->id => [
-            "id"=>$product->id,
-        ] ]; }
-        else{ $cart[$product->id] = [
-            "id"=>$product->id,
-        ]; }
+        $product = ProductCode::where('code',$code)->with(['product' => function($q){
+            $q->where('warehouse_id', User::getWarehouse()->id);
+        }])->first();
 
-        if (in_array($cart[$product->id]['codes'], $code)){
-            $cart[$product->id]['codes'][] = $code;
+        $this->addMark($product->product->mark_id);
+
+        $cod = session()->get('markCode') ?? [];
+
+        if (!in_array($product->id, $cod[$product->product->mark_id] ?? [])){
+            $cod[$product->product->mark_id][$product->id] = $product->id;
         }
 
-        session()->put('product_codes', $cart);
+        session()->put('markCode', $cod);
+        $this->searchTerm = null;
     }
 
 }

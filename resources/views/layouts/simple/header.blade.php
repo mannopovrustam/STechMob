@@ -16,18 +16,7 @@
                 </div>
             </div>
             <div class="text-default cursor-pointer" style="margin-left: 15px;" data-bs-toggle="modal" data-bs-target="#currencies">
-                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
-                    <span>USD</span>
-                    <p style="margin-bottom: 0;">1</p>
-                </div>
-                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
-                    <span>UZS</span>
-                    <p style="margin-bottom: 0;">11050</p>
-                </div>
-                <div class="dropdown d-none d-lg-inline-block ms-1 p-1">
-                    <span>EUR</span>
-                    <p style="margin-bottom: 0;">0.89</p>
-                </div>
+                @livewire('currency')
             </div>
         </div>
         @isset($header)
@@ -44,20 +33,20 @@
                     <div class="px-lg-2">
                         <div class="row g-0">
                             <div class="col">
-                                <a class="dropdown-icon-item" href="/trade?type=cash">
-                                    <img src="assets/images/trade/money.png" alt="Github">
+                                <a class="dropdown-icon-item" href="/trade/cash">
+                                    <img src="/assets/images/trade/money.png" alt="Github">
                                     <span>Naqd savdo</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="/trade?type=loan">
-                                    <img src="assets/images/trade/loan.png" alt="bitbucket">
+                                <a class="dropdown-icon-item" href="/trade/loan">
+                                    <img src="/assets/images/trade/loan.png" alt="bitbucket">
                                     <span>Nasiya</span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a class="dropdown-icon-item" href="/trade?type=installment">
-                                    <img src="assets/images/trade/pay-day.png" alt="dribbble">
+                                <a class="dropdown-icon-item" href="/trade/installment">
+                                    <img src="/assets/images/trade/pay-day.png" alt="dribbble">
                                     <span>Muddatli to’lov</span>
                                 </a>
                             </div>
@@ -72,13 +61,13 @@
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="/transfer">
-                                    <img src="assets/images/trade/goods.png" alt="mail_chimp">
+                                    <img src="/assets/images/trade/goods.png" alt="mail_chimp">
                                     <span>O`tkazma</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="/return">
-                                    <img src="assets/images/trade/return.png" alt="slack">
+                                    <img src="/assets/images/trade/return.png" alt="slack">
                                     <span>Maxsulot qaytish</span>
                                 </a>
                             </div>

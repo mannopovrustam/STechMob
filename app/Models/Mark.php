@@ -19,9 +19,20 @@ class Mark extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function priceTypeWarehouse()
+    {
+        return $this->hasMany(PriceTypeWarehouse::class, 'mark_id');
+    }
+
     public function products()
     {
-        return $this->hasMany(Product::class, 'mark_id');
+        return $this->hasMany(Product::class);
+    }
+
+    public function priceTypes()
+    {
+        return $this->belongsToMany(PriceType::class)->withTimestamps();
     }
 
     public function scopeFilter($value, $array)

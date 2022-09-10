@@ -14,15 +14,13 @@
                 <label class="form-label align-items-end justify-content-between d-flex" for="client">
                     <span>Mijoz</span><span class="text-success" style="cursor: pointer" wire:click="$set('addClient', 'true')">Qo'shish</span>
                 </label>
-                <select name="client" class="form-select" id="client">
+                <select name="client_id" class="form-select" id="client">
                     @foreach(\App\Models\User::where('role', \App\Models\User::USER_ROLE['client'])->get() as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
-
             </div>
-
-            {{--@include('admin.trade.components.discount')--}}
+{{--            @include('admin.trade.components.discount')--}}
         </div>
     </div>
 
@@ -34,31 +32,35 @@
         </div>
         <div class="card-body p-4">
 
+            <?php
+                $symbol = \App\Models\User::getCurrency()->first()->symbol ?? \App\Models\User::getCurrency()->first()?->title;
+            ?>
+
             <div class="table-responsive">
                 <table class="table mb-0">
                     <tbody>
                     <tr>
                         <td>Kirim Narxi :</td>
-                        <td class="text-end">$ 780</td>
-                    </tr>
-                    <tr>
-                        <td>Chegirma : </td>
-                        <td class="text-end">- $ 78</td>
+                        <td class="text-end">{{$symbol}} {{ $incomeSum }}</td>
+                        <input type="hidden" name="money_sys" value="{{ round($pay,2) }}">
                     </tr>
                     <tr>
                         <td><button class="btn btn-soft-warning pt-0 pb-0" type="button" wire:click="$set('addExpense', 'true')">Xarajat</button> : </td>
-                        <td class="text-end">- $ 78</td>
+                        <td class="text-end"> {{$symbol}} {{ $expenseResultSum }}</td>
                     </tr>
                     <tr>
-                        <td><button class="btn btn-soft-success pt-0 pb-0" type="button" wire:click="$set('addPay', 'true')">To'lov</button> : </td>
-                        <td class="text-end">- $ 78</td>
+                        <td><button class="btn btn-soft-success pt-0 pb-0" type="button"
+                                    wire:click="$set('addPay', 'true')"
+                            >To'lov</button> : </td>
+                        <td class="text-end"> {{$symbol}} {{ round($getSum,2) }}</td>
                     </tr>
                     <tr class="bg-light">
                         <th>Umumiy summa :</th>
                         <td class="text-end">
-                                <span class="fw-bold">
-                                    $ 702
-                                </span>
+                            <span class="fw-bold">
+                                {{$symbol}} {{ round($getSum) }}
+                                <input type="hidden" name="money_get" value="{{ round($getSum,2) }}">
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -69,10 +71,6 @@
         </div>
     </div>
 
-    <x-pay>
-        <x-slot name="size">25</x-slot>
-        <x-slot name="opening">{{ $addPay }}</x-slot>
-    </x-pay>
-
+    @include('admin.trade.components.pay')
 
 </div>

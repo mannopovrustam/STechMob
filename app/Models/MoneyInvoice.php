@@ -10,4 +10,15 @@ class MoneyInvoice extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function money_transfers()
+    {
+        return $this->hasMany(MoneyTransfer::class);
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
 }

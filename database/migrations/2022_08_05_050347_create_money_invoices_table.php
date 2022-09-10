@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('money_invoices', function (Blueprint $table) {
             $table->id();
+            $table->integer('invoice_id')->nullable();
             $table->string('name');
             $table->integer('currency_id')->nullable();
             $table->decimal('money_sys')->default(0);

@@ -9,11 +9,17 @@ class Transferable extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
     const STATUS = [
+        'must' => -1,
         'waiting' => 0,
         'success' => 1,
         'ignore' => 2,
+    ];
+
+    protected $guarded = [];
+
+    const TYPE = [
+        'receiver' => 1,
+        'sender' => -1
     ];
 }

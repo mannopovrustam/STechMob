@@ -10,11 +10,13 @@ class Pay extends Component
 
     public function mount($pay)
     {
+//        dd($pay);
         $this->pay = $pay;
     }
 
     public function render()
     {
+//        dd($this->pay);
         return view('livewire.pay');
     }
 }

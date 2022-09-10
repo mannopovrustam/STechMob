@@ -36,23 +36,33 @@ class CalculateExpenseService extends CoreService implements CalculateExpenseInt
 
     public function calculateExpense($expense, $mark)
     {
-        $this->mark = $mark;
-
-        $markExpenses = []; $result = [];
-        foreach ($expense as $key => $value){
-            $markExpenses[] = $this->expenseCases($value['type'], $value['mark'], $value['price']);
+        $checkExpense = 0;
+        foreach ($expense as $item){
+            $checkExpense = array_key_exists('price', $item);
+            if (!$checkExpense){ session()->flash('checkExpense', 'Majburiy maydonlar to\'ldirilishi shart!'); break;}
+            $checkExpense = array_key_exists('mark', $item);
+            if (!$checkExpense){ session()->flash('checkExpense', 'Majburiy maydonlar to\'ldirilishi shart!'); break;}
         }
-        foreach ($markExpenses as $markExpense) {
-            foreach ($markExpense as $key => $item){
-                if (!isset($result[$key])){
-                    $result[$key] = $item;
-                }else{
-                    $result[$key] += $item;
+
+        if ($checkExpense && $mark){
+            $this->mark = $mark;
+
+            $markExpenses = []; $result = [];
+            foreach ($expense as $key => $value){
+                $markExpenses[] = $this->expenseCases($value['type'] ?? 1, $value['mark'], $value['price']);
+            }
+            foreach ($markExpenses as $markExpense) {
+                foreach ($markExpense as $key => $item){
+                    if (!isset($result[$key])){
+                        $result[$key] = $item;
+                    }else{
+                        $result[$key] += $item;
+                    }
                 }
             }
-        }
 
-        return $result;
+            return $result;
+        }
     }
 
     public function total($marks, $price)

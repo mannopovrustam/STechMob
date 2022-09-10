@@ -15,25 +15,43 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($marks as $key => $mark)
+    @forelse($marks as $key => $value)
         <tr>
             <td>
-                <button class="btn btn-danger" type="button" wire:click="removeMark({{$mark->id ?? false}})"><i class="fa fa-minus"></i></button>
+                <button class="btn-sm btn-danger" type="button" wire:click="removeMark({{$value->id ?? false}})"><i class="fa fa-minus"></i></button>
             </td>
-            <td>{{ $mark->brand->name }}</td>
-            <td>{{ $mark->name }} {{ $mark->versiya }}</td>
-            <td><input type="text" class="form-control form-control-sm"
-                       wire:model="mark.{{$mark->id}}.quantity"
+            <td>{{ $value->brand->name }}</td>
+            <td>{{ $value->name }} {{ $value->versiya }}</td>
+            <td><input type="text" class="form-control form-control-sm" name="mark[{{$value->id}}][quantity]"
+                       wire:model="mark.{{$value->id}}.quantity"
                        wire:change="$emit('markEvent')"></td>
-            <td><input type="text" class="form-control form-control-sm"
-                       wire:model="mark.{{$mark->id}}.price"
+            <td><input type="text" class="form-control form-control-sm" name="mark[{{$value->id}}][price]"
+                       wire:model="mark.{{$value->id}}.price"
                        wire:change="$emit('markEvent')"></td>
-            <td><span wire:model="mark.{{$mark->id}}.sum"></span></td>
-            <td><span wire:model="mark.{{$mark->id}}.expense"></span></td>
-            <td><span wire:model="mark.{{$mark->id}}.cost"></span></td>
-            <td><input type="text" class="form-control form-control-sm" wire:model="mark.{{$mark->id}}.note"></td>
-            <td>IMEI</td>
+
+            <?php
+                $sum = 0; $expend = 0; $cost = 0; $expendSingle = 0;
+                if (isset($mark[$value->id]['quantity']) && isset($mark[$value->id]['price'])){
+                    $sum = (double)$mark[$value->id]['quantity']*(double)$mark[$value->id]['price'];
+                    $expend = $expenseResult[$value->id] ?? 0;
+                    $expendSingle = $expend/(double)$mark[$value->id]['quantity'];
+                    $cost = (double)$mark[$value->id]['price'] + $expend/(double)$mark[$value->id]['quantity'];
+                }
+            ?>
+
+            <td><span>{{ round($sum, 2) }}</span></td>
+            <td>
+                <span>{{ round($expend, 2) }} </span>
+                <input type="hidden" name="mark[{{$value->id}}][expense]" value="{{ round($expendSingle,2) }}">
+            </td>
+            <td><span>{{ round($cost, 2) }}</span></td>
+            <td><input type="text" class="form-control form-control-sm" name="mark[{{$value->id}}][note]"
+                       wire:model="mark.{{$value->id}}.note"></td>
+            <td><a href="javascript:void(0);" wire:click="addCode({{$value->id}})" class="ms-auto">
+                    <i class="fa fa-barcode"></i>IMEI
+                </a></td>
         </tr>
-    @endforeach
+    @endforelse
     </tbody>
 </table>
+@include('admin.trade.components.code')

@@ -26,12 +26,15 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->group(function () {
     Route::get('marks', [\App\Http\Controllers\MarkController::class, 'index']);
     Route::post('marks', [\App\Http\Controllers\MarkController::class, 'store']);
-    Route::get('trade', [\App\Http\Controllers\Trade\TradeController::class, 'index']);
+    Route::get('trade/{type}', [\App\Http\Controllers\Trade\TradeController::class, 'show']);
 
     Route::get('income', [\App\Http\Controllers\Trade\IncomeController::class, 'index']);
     Route::post('income', [\App\Http\Controllers\Trade\IncomeController::class, 'store']);
 
     Route::get('clients', [\App\Http\Controllers\Trade\ClientController::class, 'index']);
+    Route::resource('warehouses', \App\Http\Controllers\WarehouseController::class);
+    Route::resource('employees', \App\Http\Controllers\EmployeeController::class);
+    Route::resource('price_types', \App\Http\Controllers\PriceTypeController::class);
 });
 
 Route::get('/clear', function (){

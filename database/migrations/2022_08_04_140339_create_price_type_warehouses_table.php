@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('price_type_warehouses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pricetype_id')->constrained('price_types');
-            $table->integer('warehouse_id')->nullable();
             $table->integer('currency_id')->default(1);
             $table->integer('mark_id')->nullable();
             $table->decimal('bonus')->nullable();

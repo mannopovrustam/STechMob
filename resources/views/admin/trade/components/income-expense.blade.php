@@ -39,9 +39,13 @@
         </style>
 
         <div class="card-body p-4">
+
+            @if(Session::get('checkExpense'))
+                <p class="position-absolute" style="top: 3.5rem;">{{ Session::get('checkExpense') }}</p>
+            @endif
+
+
             <div class="table-responsive" style="height: 100%;">
-
-
                 <table class="table mb-0">
                     <thead>
                     <tr>
@@ -58,14 +62,10 @@
                             </div>
                         </th>
                         <th>Nomi</th>
-                        <th>Summa</th>
-                        <th>Tur</th>
+                        <th>Summa*</th>
+                        <th>Tur*</th>
                         <th>Izoh</th>
-                        <th>Model
-                            <button class="btn-sm btn-soft-success" type="button"
-                                    wire:click="calculateExpense()">
-                                <i class="fa fa-circle"></i></button>
-                        </th>
+                        <th>Model*</th>
                         <th class="text-end">Mijoz</th>
                     </tr>
                     </thead>
@@ -78,29 +78,41 @@
                                             class="fa fa-minus"></i></button>
                             </td>
                             <td><input type="text" class="form-control form-control-sm"
-                                       wire:model="expense.{{$key}}.name"></td>
+                                        wire:model="expense.{{$key}}.name"
+                                        name="expense[{{$key}}][name]"
+                                        wire:change="calculateExpense()"></td>
                             <td><input type="text" class="form-control form-control-sm"
-                                       wire:model="expense.{{$key}}.price"></td>
+                                        wire:model="expense.{{$key}}.price"
+                                       name="expense[{{$key}}][price]"
+                                        wire:change="calculateExpense()"></td>
                             <td>
-                                <select class="form-select form-select-sm" wire:model="expense.{{$key}}.type">
+                                <select class="form-select form-select-sm"
+                                        wire:model="expense.{{$key}}.type"
+                                        name="expense[{{$key}}][type]"
+                                        wire:change="calculateExpense()">
                                     <option value="{{ \App\Models\Expense::TYPE['total'] }}">Umumiy</option>
                                     <option value="{{ \App\Models\Expense::TYPE['piece'] }}">Dona</option>
                                     <option value="{{ \App\Models\Expense::TYPE['total%'] }}">Umumiy Foiz %</option>
-                                    <option value="{{ \App\Models\Expense::TYPE['distribution'] }}">Taqsimlash %
-                                    </option>
+                                    <option value="{{ \App\Models\Expense::TYPE['distribution'] }}">Taqsimlash %</option>
                                 </select>
                             </td>
                             <td><input type="text" class="form-control form-control-sm"
+                                       name="expense[{{$key}}][note]"
                                        wire:model="expense.{{$key}}.note"></td>
                             <td style="position: relative" class="tab__td">
-                                <select class="form-select form-select-sm" multiple wire:model="expense.{{$key}}.mark">
+                                <select class="form-select form-select-sm" multiple
+                                        name="expense[{{$key}}][mark][]"
+                                        wire:model="expense.{{$key}}.mark">
                                     @foreach($marks as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <td class="text-end">
-                                <select class="form-select form-select-sm" wire:model="expense.{{$key}}.client">
+                                <select class="form-select form-select-sm"
+                                        name="expense[{{$key}}][user_id]"
+                                        wire:model="expense.{{$key}}.user_id">
+                                    <option value="">Ombor</option>
                                     @foreach(\App\Models\User::where('role', \App\Models\User::USER_ROLE['client'])->get() as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -115,15 +127,20 @@
                     <thead>
                     <tr>
                         <th>Valyuta</th>
-                        <th class="text-end">Xarajat</th>
+                        <th class="text-end">
+                            Xarajat
+                            <button class="btn-sm btn-soft-success" type="button"
+                                    wire:click="calculateExpense()">
+                                <i class="fa fa-circle"></i></button>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <tr class="bg-light mt-3">
-                        <td>USD</td>
+                        <td>{{ \App\Models\Currency::whereDefault(1)->first()->title }}</td>
                         <td class="text-end">
-                            <span class="fw-bold">386</span>
+                            <span class="fw-bold">{{ $expenseResultSum }}</span>
                         </td>
                     </tr>
                     </tbody>

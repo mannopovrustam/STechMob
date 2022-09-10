@@ -65,8 +65,8 @@
                         <span>Boshqaruv</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="projects">Ombor</a></li>
-                        <li><a href="projects">Xodimlar</a></li>
+                        <li><a href="/warehouses">Ombor</a></li>
+                        <li><a href="/employees">Xodimlar</a></li>
                     </ul>
                 </li>
                 <li>
@@ -75,7 +75,7 @@
                         <span>Narx</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="projects">Narx turi</a></li>
+                        <li><a href="/price_types">Narx turi</a></li>
                         <li><a href="projects">Narx chiqarish</a></li>
                         <li><a href="projects">Narxlarni yuborish</a></li>
                     </ul>

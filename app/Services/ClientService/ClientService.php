@@ -5,15 +5,9 @@ namespace App\Services\ClientService;
 use App\Contracts\Services\ClientServiceInterface;
 use App\Helpers\FileHelper;
 use App\Helpers\ResponseError;
-use App\Http\Requests\ClientRequest;
-use App\Models\Brand;
 use App\Models\Client;
-use App\Models\Mark;
 use App\Models\User;
 use App\Services\CoreService;
-use Faker\Factory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
