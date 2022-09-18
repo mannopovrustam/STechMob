@@ -119,14 +119,14 @@
                     <input type="checkbox" class="form-check-input theme-choice" id="light-mode-switch" checked
                            style="display: none"/>
                     <label class="form-check-label btn header-item noti-icon waves-effect" for="light-mode-switch"><i
-                            class="uil-sun" style="top: 20%; position: relative;"></i></label>
+                            class="uil-sun" style="top: 10%; position: relative;"></i></label>
                 </div>
 
                 <div class="moon" style="display: none">
                     <input type="checkbox" class="form-check-input theme-choice" id="dark-mode-switch"
                            style="display: none"/>
                     <label class="form-check-label btn header-item noti-icon waves-effect" for="dark-mode-switch"><i
-                            class="uil-moon" style="top: 20%; position: relative;"></i></label>
+                            class="uil-moon" style="top: 10%; position: relative;"></i></label>
                 </div>
                 {{--<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">--}}
                 {{--<i class="uil-moon"></i>--}}

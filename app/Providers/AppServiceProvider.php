@@ -24,7 +24,8 @@ use App\Services\ClientService\ClientService;
 use App\Services\CurrencyService\CurrencyService;
 use App\Services\EmployeeService\EmployeeService;
 use App\Services\MarkService\MarkService;
-use App\Services\PriceTypeService\PriceTypeService;
+use App\Services\PriceTypeService\MoneyService;
+use App\Services\WarehouseService\TradeService;
 use App\Services\WarehouseService\WarehouseService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -55,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CurrencyServiceInterface::class, CurrencyService::class);
 
         $this->app->bind(PriceTypeRepositoryInterface::class, PriceTypeRepository::class);
-        $this->app->bind(PriceTypeServiceInterface::class, PriceTypeService::class);
+        $this->app->bind(PriceTypeServiceInterface::class, MoneyService::class);
 
     }
 

@@ -16,6 +16,7 @@ class Order extends Model
         'loan' => 2,
         'installment' => 3,
         'income' => 4,
+        'transfer' => 5,
     ];
 
     const TRADE_TYPE_NAME = [
@@ -23,5 +24,24 @@ class Order extends Model
         'loan' => 'Nasiya',
         'installment' => "Muddatli to'lov",
         'income' => 'Kirim',
+        'transfer' => "O'tkazma",
     ];
+
+    const PAYMENT_TERM_TYPE = [
+        'hour' => 1,
+        'day' => 2,
+        'month' => 3,
+        'year' => 4,
+    ];
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
 }

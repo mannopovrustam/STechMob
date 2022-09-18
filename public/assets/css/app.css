@@ -11,6 +11,9 @@
     box-shadow: 0 2px 4px rgba(15, 34, 58, .12)
 }
 
+.popup__add .card {
+    background-color: #f3f3ff !important;
+}
 .navbar-header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -682,7 +685,7 @@ body[data-layout=horizontal] .footer {
 
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li {
     position: relative;
-    white-space: nowrap
+    /*white-space: nowrap*/
 }
 
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a {

@@ -12,6 +12,7 @@ namespace App\Services\IncomeService;
 use App\Helpers\ResponseError;
 use App\Models\Invoice;
 use App\Models\MoneyInvoice;
+use App\Models\MoneyTransfer;
 use App\Models\Product;
 use App\Models\ProductExpense;
 use App\Models\Transferable;
@@ -23,7 +24,7 @@ class IncomeService extends CoreService
 {
     protected function getModelClass()
     {
-        return Product::class;
+        return Invoice::class;
     }
 
     public function create($collection)
@@ -35,9 +36,9 @@ class IncomeService extends CoreService
                     return (int)$q['quantity'] ?? 0;
                 })->sum();
 
-                $lastInvoice = isset(Invoice::orderBy('created_at', 'desc')->first()->name) ? Invoice::orderBy('created_at', 'desc')->first()->name : 'AA-0000000';
+                $lastInvoice = isset($this->model()->orderBy('created_at', 'desc')->first()->name) ? $this->model()->orderBy('created_at', 'desc')->first()->name : 'AA-0000000';
 
-                $invoice = Invoice::create([
+                $invoice = $this->model()->create([
                     'name' => (new Invoice())->generateInvoice($lastInvoice),
                     'date' => $collection['date']
                 ]);
@@ -73,7 +74,6 @@ class IncomeService extends CoreService
 
                 }
 
-
                 $lastMoneyInvoice = isset(MoneyInvoice::orderBy('created_at', 'desc')->first()->name) ? MoneyInvoice::orderBy('created_at', 'desc')->first()->name : 'AA-0000000';
 
                 $moneyInvoice = $invoice->money_invoices()->create([
@@ -91,32 +91,32 @@ class IncomeService extends CoreService
                         'main' => $key == User::getCurrency()->first()->id ? true : false,
                         'status' => Transferable::STATUS['success'],
                     ]);
+
+                    Transferable::create([
+                        'user_id' => auth()->id(),
+                        'warehouse_id' => User::getWarehouse()->id,
+                        'type' => Transferable::TYPE['sender'],
+                        'transferable_type' => MoneyTransfer::class,
+                        'transferable_id' => $moneyTransfer->id,
+                        'date' => $collection['date'],
+                        'note' => User::getCurrency()->map(function ($q) {
+                            return $q->title . ":" . $q->rate;
+                        })->implode('; '),
+                        'status' => Transferable::STATUS['must']
+                    ]);
+
+                    Transferable::create([
+                        'user_id' => $collection['client_id'],
+                        'type' => Transferable::TYPE['receiver'],
+                        'transferable_type' => MoneyTransfer::class,
+                        'transferable_id' => $moneyTransfer->id,
+                        'date' => $collection['date'],
+                        'note' => User::getCurrency()->map(function ($q) {
+                            return $q->title . ":" . $q->rate;
+                        })->implode('; '),
+                        'status' => Transferable::STATUS['must']
+                    ]);
                 }
-
-                Transferable::create([
-                    'user_id' => auth()->id(),
-                    'warehouse_id' => User::getWarehouse()->id,
-                    'type' => Transferable::TYPE['receiver'],
-                    'transferable_type' => $moneyTransfer,
-                    'transferable_id' => $moneyTransfer->id,
-                    'date' => $collection['date'],
-                    'note' => User::getCurrency()->map(function ($q) {
-                        return $q->title . ":" . $q->rate;
-                    })->implode('; '),
-                    'status' => Transferable::STATUS['success']
-                ]);
-
-                Transferable::create([
-                    'user_id' => $collection['client_id'],
-                    'type' => Transferable::TYPE['sender'],
-                    'transferable_type' => $moneyTransfer,
-                    'transferable_id' => $moneyTransfer->id,
-                    'date' => $collection['date'],
-                    'note' => User::getCurrency()->map(function ($q) {
-                        return $q->title . ":" . $q->rate;
-                    })->implode('; '),
-                    'status' => Transferable::STATUS['success']
-                ]);
 
                 if (isset($collection['expense'])) {
                     foreach ($collection['expense'] as $key => $value) {
@@ -149,7 +149,7 @@ class IncomeService extends CoreService
                                 'user_id' => auth()->id(),
                                 'warehouse_id' => User::getWarehouse()->id,
                                 'type' => Transferable::TYPE['sender'],
-                                'transferable_type' => $moneyTransfer,
+                                'transferable_type' => MoneyTransfer::class,
                                 'transferable_id' => $moneyTransfer->id,
                                 'date' => $collection['date'],
                                 'note' => User::getCurrency()->first()->rate,
@@ -160,7 +160,7 @@ class IncomeService extends CoreService
                                 'user_id' => auth()->id(),
                                 'warehouse_id' => User::getWarehouse()->id,
                                 'type' => Transferable::TYPE['receiver'],
-                                'transferable_type' => $moneyTransfer,
+                                'transferable_type' => MoneyTransfer::class,
                                 'transferable_id' => $moneyTransfer->id,
                                 'date' => $collection['date'],
                                 'note' => User::getCurrency()->first()->rate,
@@ -169,7 +169,6 @@ class IncomeService extends CoreService
                         }
                     }
                 }
-
             });
             return ['status' => true, 'code' => ResponseError::NO_ERROR];
         } catch (\Exception $e) {

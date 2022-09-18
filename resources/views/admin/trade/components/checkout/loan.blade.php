@@ -8,14 +8,13 @@
         <div class="card-body">
             <div class="mb-3 d-flex justify-content-between align-items-center">
                 <label class="form-label" for="client">Sana</label>
-                <input class="form-control" style="width: 50%" type="date" required name="date" wire:model="date" value="{{ now()->format('Y-m-d') }}" id="example-date-input">
+                <input class="form-control" style="width: 50%" type="date" name="date" value="{{ now()->format('Y-m-d') }}" id="example-date-input">
             </div>
             <div class="mb-3">
                 <label class="form-label align-items-end justify-content-between d-flex" for="client">
-                    <span>Mijoz</span><span class="text-success" style="cursor: pointer" wire:click="$set('addClient', 'true')">Qo'shish<span class="hot_key">M</span></span>
+                    <span>Mijoz</span><span class="text-success" style="cursor: pointer" wire:click="$set('addClient', 'true')">Qo'shish</span>
                 </label>
-                <select name="client_id" class="form-select" id="client" wire:model="client_id">
-                    <option value=""></option>
+                <select name="client_id" class="form-select" id="client">
                     @foreach(\App\Models\User::where('role', \App\Models\User::USER_ROLE['client'])->get() as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -41,35 +40,48 @@
                     <tr>
                         <td>Savdo Narxi :</td>
                         <td class="text-end">{{$symbol}} {{ round($cashSum,2) }}</td>
-                        <?php $collections['money_sys'] = round($pay); ?>
+                        <input type="hidden" name="money_sys" value="{{ round($pay,2) }}">
                     </tr>
                     <tr>
-                        <td class="align-items-end d-flex"><button class="btn btn-soft-warning pt-0 pb-0" type="button"
+                        <td><button class="btn btn-soft-warning pt-0 pb-0" type="button"
                                     wire:click="$set('addDiscount', 'true')"
-                            >Chegirma</button> <span class="hot_key">C</span> : </td>
+                            >Chegirma</button> : </td>
                         <td class="text-end"> {{$symbol}} {{ round($discount,2) }}</td>
-                        <?php $collections['discount'] = round($discount); ?>
-
                     </tr>
                     <tr>
-                        <td class="align-items-end d-flex"><button class="btn btn-soft-success pt-0 pb-0" type="button"
+                        <td><button class="btn btn-soft-success pt-0 pb-0" type="button"
                                     wire:click="$set('addPay', 'true')"
-                            >To'lov</button> <span class="hot_key">T</span> : </td>
+                            >To'lov</button> : </td>
                         <td class="text-end"> {{$symbol}} {{ round($getSum,2) }}</td>
                     </tr>
                     <tr class="bg-light">
                         <th>Umumiy summa :</th>
                         <td class="text-end">
                             <span class="fw-bold">
-                                {{$symbol}} {{ round($getSum) }}
-                                <?php
-                                    $collections['money_get'] = round($getSum);
-                                ?>
+                                {{$symbol}} {{ round($pay,2) }}
+                                <input type="hidden" name="money_get" value="{{ round($getSum,2) }}">
                             </span>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Qarz : </td>
+                        <td class="text-end"> {{$symbol}} {{ round($pay-$getSum,2) }}
+                            <input type="hidden" name="debt" wire:model="debt" value="{{ round($pay-$getSum,2) }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>To'lov muddati : </td>
+                        <td class="text-end">
+                            <div class="input-group">
+                                <input type="text" name="debt_date" wire:model="payment_term" class="form-control form-control-sm">
+                                <div class="input-group-text">kun</div>
+                            </div>
+                        </td>
+                    </tr>
+
                     </tbody>
                 </table>
+
             </div>
             <!-- end table-responsive -->
         </div>

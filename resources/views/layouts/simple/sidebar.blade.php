@@ -40,11 +40,11 @@
                         <span>Pul amaliyotlari</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="projects">Pul o’tkazma</a></li>
-                        <li><a href="projects">Pul qoldiq</a></li>
-                        <li><a href="projects">Valuyta ayirboshlash</a></li>
-                        <li><a href="projects">Hisobot</a></li>
-                        <li><a href="projects" style="color: #FD5308">Xarajat</a></li>
+                        <li><a href="/money/transfer">Pul o’tkazma</a></li>
+                        <li><a href="/money/balance">Pul qoldiq</a></li>
+                        <li><a href="/money/exchange">Valyuta ayirboshlash</a></li>
+                        <li><a href="/money/report">Hisobot</a></li>
+                        <li><a href="/money/" style="color: #FD5308">Xarajat</a></li>
                     </ul>
                 </li>
                 <li>

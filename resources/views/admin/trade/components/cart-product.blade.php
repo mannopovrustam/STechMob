@@ -25,14 +25,18 @@
                     <td>{{ $value->mark->name }} {{ $value->mark->versiya }}</td>
                     <td class="d-flex justify-content-between align-items-center">
                         <input type="text" class="form-control form-control-sm"
-                               wire:model="mark.{{ $value->mark_id }}.quantity_single" style="margin-right: 1rem;">
+                               name="mark[{{ $value->mark_id }}][quantity]"
+                               wire:model="mark.{{ $value->mark_id }}.quantity"
+                               wire:change="markValidate()"
+                               value="{{ $mark[$value->mark_id]['quantity'] ?? 0 }}"
+                               style="margin-right: 1rem;" autocomplete="off">
                         <a href="javascript:void(0);" wire:click="shipment({{$value->mark_id}})" class="ms-auto">
                             <i class="fa fa-truck"></i>Yuk
                         </a>
                     </td>
                     <td>{{ $value->price }}</td>
-                    <td><input type="text" class="form-control form-control-sm"
-                               wire:model="mark.{{ $value->mark_id }}.price"></td>
+                    <td><input type="text" class="form-control form-control-sm" name="mark[{{$value->mark_id}}][price]"
+                               wire:model="mark.{{ $value->mark_id }}.price" autocomplete="off"></td>
                     <td>
                         <a href="javascript:void(0);" wire:click="getCode({{$value->mark_id}})" class="ms-auto">
                             <i class="fa fa-barcode"></i>IMEI
@@ -46,6 +50,5 @@
     </table>
     @include('admin.trade.components.get-code')
     @include('admin.trade.components.shipment')
-    {{--@include('admin.trade.components.shipment-code')--}}
 
 </div>

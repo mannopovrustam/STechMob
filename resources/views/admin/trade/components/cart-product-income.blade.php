@@ -51,6 +51,7 @@
                     <i class="fa fa-barcode"></i>IMEI
                 </a></td>
         </tr>
+        @empty
     @endforelse
     </tbody>
 </table>

@@ -22,25 +22,28 @@
                     </thead>
                     <tbody>
                     @foreach($shipments->products ?? [] as $key => $value)
-                        <tr>
-                            <td>
-                                <b>{{ $value->shipment->invoice->name }}</b> ({{ $value->quantity }})
-                                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$value->shipment->invoice->date)->format('d.m.Y') }}
+                        @if($value->quantity > $value->order_count)
+                            <tr>
+                                <td>
+                                    <b>{{ $value->shipment->invoice->name }}</b> ({{ $value->quantity - $value->order_count }})
+                                    {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$value->shipment->invoice->date)->format('d.m.Y') }}
 
-                                @if($value->product_codes->count() > 0)
-                                    <button class="btn-sm btn-success" type="button"
-                                            wire:click="shipmentCode({{$value}})">
-                                        <i class="fa fa-barcode"></i>
-                                    </button>
-                                @endif
-                            </td>
-                            <td class="text-end">
-                                <input type="text" class="form-control"
-                                       wire:model="markShipment.{{$shipmentMark}}.{{$value->shipment->id}}.quantity"
-                                       wire:change="shipmentMarkValidate('{{$shipmentMark}}', '{{$value->shipment->id}}', '{{$value->quantity}}')"
-                                >
-                            </td>
-                        </tr>
+                                    @if($value->product_codes->count() > 0)
+                                        <button class="btn-sm btn-success" type="button"
+                                                wire:click="shipmentCode({{$value}})">
+                                            <i class="fa fa-barcode"></i>
+                                        </button>
+                                    @endif
+                                </td>
+                                <td class="text-end">
+                                    <input type="text" class="form-control"
+                                           wire:model="markShipment.{{$shipmentMark}}.{{$value->shipment->id}}.quantity"
+                                           name="markShipment[{{$shipmentMark}}][{{$value->shipment->id}}][quantity]"
+                                           wire:change="shipmentMarkValidate('{{$shipmentMark}}', '{{$value->shipment->id}}', '{{$value->quantity - $value->order_count}}')"
+                                    >
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>
@@ -59,13 +62,13 @@
                     <div class="table-responsive">
                         <table class="table mb-0">
                             <thead>
-                            <tr>
-                                <th>IMEI</th>
-                                <th class="text-end"></th>
-                            </tr>
+                                <tr>
+                                    <th>IMEI</th>
+                                    <th class="text-end"></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @forelse($shipmentCodes ? $shipmentCodes['product_codes'] : [] as $code)
+                            @forelse($shipmentCodes ? collect($shipmentCodes['product_codes'])->whereNull('order_id') : [] as $code)
                                 <tr class="bg-light">
                                     <td>
                                         {{ $code['code'] }}

@@ -1,10 +1,12 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml" wire:keydown.escape="hidePopup">
 
     <x-slot name="header">Savdo::<span class="text-primary">{{ $type }}</span></x-slot>
     <div class="container-fluid">
-        <form action="/orders" method="post">
+        <form wire:submit.prevent="storeTrade" method="post">
+        {{--<form action="/trade" method="post">--}}
             @csrf
 
+            <input type="hidden" name="trade_type" value="{{ \App\Models\Order::TRADE_TYPE[$trade] }}">
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -15,14 +17,15 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <a href="/trade/cash" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="Naqd savdo">
+                                       title="Naqd savdo" @if($trade == 'cash') style="border-bottom: 0.1rem solid #3ab449;" @endif>
                                         <img style="height: 2rem;" src="/assets/images/trade/money.png" alt="Github">
                                     </a>
-                                    <a href="/trade/loan" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Nasiya">
+                                    <a href="/trade/loan" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Nasiya" @if($trade == 'loan') style="border-bottom: 0.1rem solid #dbc49f;" @endif>
                                         <img style="height: 2rem;" src="/assets/images/trade/loan.png" alt="bitbucket">
                                     </a>
                                     <a href="/trade/installment" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="Muddatli to'lov">
+                                       title="Muddatli to'lov" @if($trade == 'installment') style="border-bottom: 0.1rem solid #f5f8f9;" @endif>
                                         <img style="height: 2rem;" src="/assets/images/trade/pay-day.png" alt="dribbble">
                                     </a>
                                 </div>
@@ -46,5 +49,15 @@
 
         </form>
     </div>
-
 </div>
+@push('scripts')
+    <script>
+        document.onkeydown = function(e) {
+            if (e.keyCode == 27) {window.livewire.emit('hidePopup')}
+            if (e.keyCode == 77) {window.livewire.emit('addClient')}
+            if (e.keyCode == 67) {window.livewire.emit('addDiscount')}
+            if (e.keyCode == 84) {window.livewire.emit('addPay')}
+        };
+    </script>
+@endpush
+

@@ -71,9 +71,6 @@
         top: 0;
         bottom: 0;
     }
-    .popup__add .card {
-        background-color: #303755 !important;
-    }
     .popup__add.true {
         display: block;
     }
@@ -100,6 +97,12 @@
     }
     .width__75 {
         width: 75vw;
+    }
+    .hot_key{
+        border: 1px solid #ccc;
+        border-radius: .3rem;
+        padding: 0 .2rem;
+        margin-left: .2rem;
     }
 
     @media  (max-width: 700px) {

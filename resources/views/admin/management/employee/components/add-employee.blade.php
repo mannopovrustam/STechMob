@@ -25,8 +25,6 @@
                 @endif
             @endif
             <form wire:submit.prevent="addEmployee">
-
-                <input type="hidden" wire:model="collection.id" value="17">
                 <input type="hidden" wire:model="collection.role" value="{{ \App\Models\User::USER_ROLE['employee'] }}">
                 <div class="row">
                     <div class="col-md-4">
